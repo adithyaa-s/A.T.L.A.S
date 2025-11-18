@@ -1,0 +1,14 @@
+.env
+
+/venv
+
+/credentials
+
+credentials.json
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log

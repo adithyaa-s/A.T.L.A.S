@@ -12,7 +12,9 @@ COPY ATLAS/google-calendar-mcp/package*.json ./
 # Copy source files needed for build
 COPY ATLAS/google-calendar-mcp/scripts ./scripts
 COPY ATLAS/google-calendar-mcp/src ./src
-COPY ATLAS/google-calendar-mcp/tsconfig.json .
+COPY ATLAS/google-calendar-mcp/tsconfig.json ./
+COPY ATLAS/google-calendar-mcp/tsconfig.lint.json ./
+COPY ATLAS/google-calendar-mcp/vitest.config.ts ./
 
 # Install and build
 RUN npm ci --no-audit --no-fund --silent && \
@@ -60,8 +62,8 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PATH="/app/ATLAS/google-calendar-mcp/node_modules/.bin:$PATH"
 
-# Create entry point script
-COPY --chown=atlas:atlas entrypoint.sh /app/
+# Copy entry point script
+COPY --chown=atlas:atlas ATLAS/entrypoint.sh /app/
 RUN chmod +x /app/entrypoint.sh
 
 # Expose port for HTTP server (optional)

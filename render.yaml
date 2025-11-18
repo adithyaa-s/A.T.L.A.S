@@ -47,9 +47,3 @@ services:
       name: atlas-data
       mountPath: /app/data
       sizeGB: 10
-    
-    # Cron jobs (optional)
-    # cronJobs:
-    #   - name: cleanup-logs
-    #     schedule: "0 0 * * *"
-    #     command: find /app/logs -mtime +7 -delete
