@@ -1,5 +1,4 @@
-google-adk>=0.1.0
-google-ai>=0.1.0
+google-generativeai>=0.3.0
 google-auth-oauthlib>=1.0.0
 google-auth-httplib2>=0.2.0
 google-auth>=2.25.0
