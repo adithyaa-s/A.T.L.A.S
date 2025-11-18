@@ -30,11 +30,8 @@ services:
     # Health check configuration
     healthCheckPath: /health
     
-    # Build command (optional, runs in container before start)
-    preStartCommand: echo "ATLAS starting..."
-    
     # Start command
-    startCommand: /app/entrypoint.sh
+    # Note: CMD is defined in Dockerfile, no need to override
     
     # Auto-deployment from GitHub
     autoDeploy: true

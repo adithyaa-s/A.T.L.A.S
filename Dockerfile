@@ -62,9 +62,8 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PATH="/app/ATLAS/google-calendar-mcp/node_modules/.bin:$PATH"
 
-# Copy entry point script
-COPY --chown=atlas:atlas ATLAS/entrypoint.sh /app/
-RUN chmod +x /app/entrypoint.sh
+# Make entrypoint script executable (already copied with ATLAS/)
+RUN chmod +x /app/ATLAS/entrypoint.sh
 
 # Expose port for HTTP server (optional)
 EXPOSE 3000
@@ -74,4 +73,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "print('OK')" || exit 1
 
 # Run application
-CMD ["/app/entrypoint.sh"]
+CMD ["/app/ATLAS/entrypoint.sh"]
