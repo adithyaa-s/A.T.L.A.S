@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  atlas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: atlas-app
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - GOOGLE_SEARCH_API_KEY=${GOOGLE_SEARCH_API_KEY}
+      - GOOGLE_SEARCH_ENGINE_ID=${GOOGLE_SEARCH_ENGINE_ID}
+      - GOOGLE_GENAI_USE_VERTEXAI=0
+    volumes:
+      # Mount credentials for development
+      - ./ATLAS/credentials:/app/ATLAS/credentials:ro
+      - ./ATLAS/.env:/app/ATLAS/.env:ro
+      # Optional: Mount source for live development
+      - ./ATLAS/tools:/app/ATLAS/tools
+      - ./ATLAS/agent.py:/app/ATLAS/agent.py
+    ports:
+      - "3000:3000"  # Calendar MCP HTTP server
+    networks:
+      - atlas-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  atlas-network:
+    driver: bridge

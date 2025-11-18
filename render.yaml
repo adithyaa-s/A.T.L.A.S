@@ -1,0 +1,55 @@
+services:
+  - type: web
+    name: atlas-app
+    runtime: docker
+    plan: standard
+    
+    # Build configuration
+    dockerfilePath: ./Dockerfile
+    
+    # Environment variables (set these in Render dashboard)
+    envVars:
+      - key: GOOGLE_API_KEY
+        scope: build,run
+      - key: GOOGLE_SEARCH_API_KEY
+        scope: build,run
+      - key: GOOGLE_SEARCH_ENGINE_ID
+        scope: build,run
+      - key: GOOGLE_GENAI_USE_VERTEXAI
+        value: "0"
+        scope: build,run
+      - key: PYTHONUNBUFFERED
+        value: "1"
+        scope: run
+    
+    # Port configuration
+    ports:
+      - port: 3000
+        protocol: HTTP
+    
+    # Health check configuration
+    healthCheckPath: /health
+    
+    # Build command (optional, runs in container before start)
+    preStartCommand: echo "ATLAS starting..."
+    
+    # Start command
+    startCommand: /app/entrypoint.sh
+    
+    # Auto-deployment from GitHub
+    autoDeploy: true
+    
+    # Resource configuration
+    numInstances: 1
+    
+    # Disk configuration (optional)
+    disk:
+      name: atlas-data
+      mountPath: /app/data
+      sizeGB: 10
+    
+    # Cron jobs (optional)
+    # cronJobs:
+    #   - name: cleanup-logs
+    #     schedule: "0 0 * * *"
+    #     command: find /app/logs -mtime +7 -delete
